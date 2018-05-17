@@ -108,16 +108,15 @@ class Player extends Character {
     
     handleInput(move) {
         console.log(`${move} is pressed`)
-        if (move === 'left') {
+        if (move === 'left' && this.caseCol !== 0) {
             this.caseCol--;
-        } else if (move === 'right') {
+        } else if (move === 'right' && this.caseCol !== 4) {
             this.caseCol++;
-        } else if (move === 'up') {
+        } else if (move === 'up' && this.caseRow !== 0) {
             this.caseRow--;
-        } else if (move === 'down') {
+        } else if (move === 'down' && this.caseRow !== 5) {
             this.caseRow++;
         }
-        
         
         this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
         this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
