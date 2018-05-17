@@ -7,12 +7,11 @@ class Character {
         this.width = 101 / 2;
     }
     
-}
-
+} 
 
 // Enemies our player must avoid
 class Enemy extends Character {
-    constructor( randomHeight = 2 , randomeSpeed = 5, width, height) {
+    constructor( randomHeight = 2 , randomSpeed = 5, width, height) {
         super(width, height);
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
@@ -24,12 +23,13 @@ class Enemy extends Character {
         this.caseRow = 3;
         this.y = ( this.caseRow * this.height ) - ( this.height / 3 );
         
-        this.caseCol = 5;
-        this.x = (this.caseCol * this.width )  - ( this.width );
+        // initial col = -1, so not visible, but just before entering the screen
+        this.caseCol = 0;
+        this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
         
         // sets the speed of the enemy
         // can add some randomness in their speed
-        this.speed = 1 ;
+        this.speed = randomSpeed ;
         
     }
     
@@ -91,12 +91,8 @@ class Player extends Character {
         // sets the initial location of the player, bottom center
         this.caseRow = 5;
         this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
-        this.caseCol = 4;
+        this.caseCol = 2;
         this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
-        
-        // sets the speed of the enemy
-        // can add some randomness in their speed
-        this.speed = 1 ;
         
     }
 
@@ -110,8 +106,21 @@ class Player extends Character {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
     
-    handleInput() {
+    handleInput(move) {
+        console.log(`${move} is pressed`)
+        if (move === 'left') {
+            this.caseCol--;
+        } else if (move === 'right') {
+            this.caseCol++;
+        } else if (move === 'up') {
+            this.caseRow--;
+        } else if (move === 'down') {
+            this.caseRow++;
+        }
         
+        
+        this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
+        this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
     }
 };
 
@@ -123,7 +132,6 @@ let enemy1 = new Enemy();
 const allEnemies = [enemy1];
 
 // Place the player object in a variable called player
-
 const player = new Player();
 
 
