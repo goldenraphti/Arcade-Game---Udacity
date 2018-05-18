@@ -27,7 +27,7 @@ class Enemy extends Character {
         this.y = ( this.caseRow * this.height ) - ( this.height / 3 );
         
         // initial col = -1, so not visible, but just before entering the screen
-        this.caseCol = 0;
+        this.caseCol = -1;
         this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
         
         if ( gameLevel === 'beginner') {
@@ -60,8 +60,18 @@ class Enemy extends Character {
         // Handles collision with the Player
         function checkCollision(enemyXPosition , enemyCaseRow) {
             if ( (player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
-                console.log(`collision on caseRow: ${player.caseRow} with caseCol: ${player.caseCol} !`);
-                 document.getElementById('message-box').setAttribute('style','display : block');
+                // stops movements of the game
+                Enemy.prototype.update = function () {
+                    this.x = this.x;
+                }
+                
+                // stops creating new Enemies
+            
+                
+                // display message 'you died'
+                document.getElementById('message-box').setAttribute('style','display : block');
+                
+                // resets the game to its initial state
                 reset();
             }
         }
@@ -121,7 +131,6 @@ class Player extends Character {
     }
     
     handleInput(move) {
-        console.log(`${move} is pressed`)
         if (move === 'left' && this.caseCol !== 0) {
             this.caseCol--;
         } else if (move === 'right' && this.caseCol !== 4) {
@@ -150,14 +159,11 @@ const allEnemies = [];
  function createEnemy () {
      
      let randomSpeed = getRandomInt(10) + 1;
-     console.log(randomSpeed);
      
      let randomeHeight = getRandomInt(3) + 1 ;
-     console.log(randomeHeight);
      
      let enemy =  Symbol('enemy');
      enemy = new Enemy(randomeHeight , randomSpeed);
-     console.log(enemy);
      return enemy
  }
 
@@ -198,23 +204,26 @@ enemyAutomaticCreation ()
 
 // function deleting any enemy out of the screen, to empty the allEnemy array from its useless elements
 function automaticDeletionOfEnemiesOutFromtScreen() {
-    for (enemy of allEnemies) {
-        if (enemy.x > 505) {
-            console.log('Cleaning bug out of screen');
-            allEnemies.splice(enemy,1);
+
+    let i = allEnemies.length
+    while (i--) {
+        if (allEnemies[i].x > 505) {
+            console.log('clean bug');
+            allEnemies.splice(i,1);
         }
     }
     
 }
 // calls the automatic cleaning of the allEnemies array every  seconds
-window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,1000);
+window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,100);
 
 
 // function reseting the game to its initial state, and displaying a message
 function reset() {
-    // display message for a little while (1 second)
-    
     // reset game to initial state
+    
+    // hide any eventual message displayed above the game
+    
 }
 
 // Place the player object in a variable called player
