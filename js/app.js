@@ -66,7 +66,7 @@ class Enemy extends Character {
                 }
                 
                 // stops creating new Enemies
-            
+                window.clearInterval(timeoutID);
                 
                 // display message 'you died'
                 document.getElementById('message-box').setAttribute('style','display : block');
@@ -172,6 +172,10 @@ function addEnemies() {
     allEnemies.push(enemyToAdd);
 }
 
+// intervals of enemy creation
+let timeoutID;
+
+// function creating enemies automatically
 function enemyAutomaticCreation () {
 
     function enemyCreation() {
@@ -191,13 +195,13 @@ function enemyAutomaticCreation () {
                 randomTimeSetout = getRandomTimeArbitrary(300, 1500)  ;
             }
 
-        let timeoutID;
+
         
         timeoutID = window.setInterval(addEnemies, randomTimeSetout);
+
     }
     
    enemyCreation();
-    
 }
 // call the function right away
 enemyAutomaticCreation ()
