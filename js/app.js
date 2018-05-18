@@ -24,7 +24,7 @@ class Enemy extends Character {
         // sets the initial location of the enemy
         // should be out from screen on the left side, but randomly row 1,2 or 3
         
-        this.caseRow = 3;
+        this.caseRow = randomHeight;
         this.y = ( this.caseRow * this.height ) - ( this.height / 3 );
         
         // initial col = -1, so not visible, but just before entering the screen
@@ -42,7 +42,7 @@ class Enemy extends Character {
         // sets the speed of the enemy
         // can add some randomness in their speed
         // randomSpeed should be between 1 and 10 max
-        this.speed = 10 * this.speedLevel;
+        this.speed = randomSpeed * this.speedLevel;
         
     }
     
@@ -131,12 +131,35 @@ class Player extends Character {
     }
 };
 
+// function creating nombres entiers
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+
+const allEnemies = [];
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+ function createEnemy () {
+     
+     let randomSpeed = getRandomInt(10) + 1;
+     console.log(randomSpeed);
+     
+     let randomeHeight = getRandomInt(3) + 1 ;
+     console.log(randomeHeight);
+     
+     let enemy =  Symbol('enemy');
+     enemy = new Enemy(randomeHeight , randomSpeed);
+     console.log(enemy);
+     return enemy
+ }
 
-let enemy1 = new Enemy();
+function addEnemies() {
+    enemyToAdd = createEnemy()
+    allEnemies.push(enemyToAdd);
+}
 
-const allEnemies = [enemy1];
 
 // Place the player object in a variable called player
 const player = new Player();
