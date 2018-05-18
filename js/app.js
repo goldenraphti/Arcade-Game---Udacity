@@ -15,7 +15,7 @@ gameLevel = 'beginner';
 
 // Enemies our player must avoid
 class Enemy extends Character {
-    constructor( randomHeight = 2 , randomSpeed = 5, width, height) {
+    constructor( randomHeight = 2 , randomSpeed = 30, width, height) {
         super(width, height);
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
@@ -23,7 +23,6 @@ class Enemy extends Character {
         
         // sets the initial location of the enemy
         // should be out from screen on the left side, but randomly row 1,2 or 3
-        
         this.caseRow = randomHeight;
         this.y = ( this.caseRow * this.height ) - ( this.height / 3 );
         
@@ -33,9 +32,9 @@ class Enemy extends Character {
         
         if ( gameLevel === 'beginner') {
             this.speedLevel = 30 ;
-        } else if ( level === 'intermediate') {
+        } else if ( gameLevel === 'intermediate') {
             this.speedLevel = 50 ;
-        } else if ( level === 'expert') {
+        } else if ( gameLevel === 'expert') {
             this.speedLevel = 70 ;
         }
         
@@ -55,7 +54,7 @@ class Enemy extends Character {
         
         
         // Updates the Enemy location
-        this.x += this.speed * dt ; 
+        this.x += this.speed * dt ;
         
         
         // Handles collision with the Player 
@@ -159,6 +158,47 @@ function addEnemies() {
     enemyToAdd = createEnemy()
     allEnemies.push(enemyToAdd);
 }
+
+function enemyAutomaticCreation () {
+
+    function enemyCreation() {
+        
+    
+        function getRandomTimeArbitrary(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        let randomTimeSetout;
+
+        if ( gameLevel === 'beginner') {
+                randomTimeSetout = getRandomTimeArbitrary(1000, 2000) ;
+            } else if ( gameLevel === 'intermediate') {
+                randomTimeSetout = getRandomTimeArbitrary(700, 2000)  ;
+            } else if ( gameLevel === 'expert') {
+                randomTimeSetout = getRandomTimeArbitrary(300, 1500)  ;
+            }
+
+        let timeoutID;
+        
+        timeoutID = window.setInterval(addEnemies, randomTimeSetout);
+    }
+    
+   enemyCreation();
+    
+}
+// call the function right away
+//enemyAutomaticCreation ()
+function automaticDeletionOfEnemiesOutFromtScreen() {
+    for (enemy of allEnemies) {
+        if (enemy.x > 505) {
+            console.log('Cleaning bug out of screen');
+            allEnemies.splice(enemy,1);
+        }
+    }
+    
+}
+
+window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,5000);
 
 
 // Place the player object in a variable called player
