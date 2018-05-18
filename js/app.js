@@ -7,7 +7,11 @@ class Character {
         this.width = 101 / 2;
     }
     
-} 
+}
+
+// for now, decide that level of the game is "beginner", but can later implement possibility to decide level, or to increase the level progressively when player keeps winning
+gameLevel = 'beginner';
+
 
 // Enemies our player must avoid
 class Enemy extends Character {
@@ -27,9 +31,18 @@ class Enemy extends Character {
         this.caseCol = 0;
         this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
         
+        if ( gameLevel === 'beginner') {
+            this.speedLevel = 30 ;
+        } else if ( level === 'intermediate') {
+            this.speedLevel = 50 ;
+        } else if ( level === 'expert') {
+            this.speedLevel = 70 ;
+        }
+        
         // sets the speed of the enemy
         // can add some randomness in their speed
-        this.speed = randomSpeed ;
+        // randomSpeed should be between 1 and 10 max
+        this.speed = 10 * this.speedLevel;
         
     }
     
@@ -42,6 +55,7 @@ class Enemy extends Character {
         
         
         // Updates the Enemy location
+        this.x += this.speed * dt ; 
         
         
         // Handles collision with the Player 
@@ -57,12 +71,6 @@ class Enemy extends Character {
         
     }
 };
-
-
-Enemy.prototype.update = function(dt) {
-    
-};
-
 
 
 
