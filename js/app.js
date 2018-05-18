@@ -68,6 +68,9 @@ class Enemy extends Character {
                 // stops creating new Enemies
                 window.clearInterval(timeoutID);
                 
+                // stops the player from moving
+                playerActive = false;
+                
                 // display message 'you died'
                 document.getElementById('message-box').setAttribute('style','display : block');
                 
@@ -90,7 +93,8 @@ class Enemy extends Character {
     }
 };
 
-
+// variable displaying if player should be able to play or not (true when game is on, false when died or has not started yet)
+let playerActive = true;
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -131,18 +135,21 @@ class Player extends Character {
     }
     
     handleInput(move) {
-        if (move === 'left' && this.caseCol !== 0) {
-            this.caseCol--;
-        } else if (move === 'right' && this.caseCol !== 4) {
-            this.caseCol++;
-        } else if (move === 'up' && this.caseRow !== 0) {
-            this.caseRow--;
-        } else if (move === 'down' && this.caseRow !== 5) {
-            this.caseRow++;
-        }
         
-        this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
-        this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
+        if (playerActive) {
+            if (move === 'left' && this.caseCol !== 0) {
+                this.caseCol--;
+            } else if (move === 'right' && this.caseCol !== 4) {
+                this.caseCol++;
+            } else if (move === 'up' && this.caseRow !== 0) {
+                this.caseRow--;
+            } else if (move === 'down' && this.caseRow !== 5) {
+                this.caseRow++;
+            }
+
+            this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
+            this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
+        }
     }
 };
 
