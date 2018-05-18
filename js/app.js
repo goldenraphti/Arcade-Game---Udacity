@@ -75,7 +75,12 @@ class Enemy extends Character {
                 document.getElementById('message-box').setAttribute('style','display : block');
                 
                 // resets the game to its initial state
-                reset();
+                let timeoutReset;
+
+                function delayedReset() {
+                  timeoutID = window.setTimeout(reset, 2000);
+                }
+                delayedReset();
             }
         }
         checkCollision(this.x , this.caseRow);
@@ -232,8 +237,24 @@ window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,100);
 // function reseting the game to its initial state, and displaying a message
 function reset() {
     // reset game to initial state
+    allEnemies.length = 0;
+    
+    // sets the initial location of the player, bottom center
+    player.caseRow = 5;
+    player.y = ( player.caseRow * player.height ) - ( player.height / 2 );
+    player.caseCol = 2;
+    player.x = ( (player.caseCol * 2 - 1 ) * player.width ) + ( player.width);
+    playerActive = true;
+    
+    //restart the automatic creation of enemies
+    
+    // re-enable the enemies to move
+    Enemy.prototype.update = function () {
+        this.x += this.speed * dt ;
+    }
     
     // hide any eventual message displayed above the game
+    document.getElementById('message-box').setAttribute('style','display : none');
     
 }
 
