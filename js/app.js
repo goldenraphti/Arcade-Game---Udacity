@@ -57,7 +57,16 @@ class Enemy extends Character {
         this.x += this.speed * dt ;
         
         
-        // Handles collision with the Player 
+        // Handles collision with the Player
+        function checkCollision(enemyXPosition , enemyCaseRow) {
+            if ( (player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
+                console.log(`collision on caseRow: ${player.caseRow} with caseCol: ${player.caseCol} !`);
+                 document.getElementById('message-box').setAttribute('style','display : block');
+                reset();
+            }
+        }
+        checkCollision(this.x , this.caseRow);
+
         
     }
     
@@ -102,11 +111,9 @@ class Player extends Character {
         this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
         
     }
-
-    update() {
-        // Updates the Enemy location
+    
+    update(dt) {
         
-        // Handles collision with the Player 
     }
     
     render() {
@@ -187,7 +194,9 @@ function enemyAutomaticCreation () {
     
 }
 // call the function right away
-//enemyAutomaticCreation ()
+enemyAutomaticCreation ()
+
+// function deleting any enemy out of the screen, to empty the allEnemy array from its useless elements
 function automaticDeletionOfEnemiesOutFromtScreen() {
     for (enemy of allEnemies) {
         if (enemy.x > 505) {
@@ -197,9 +206,16 @@ function automaticDeletionOfEnemiesOutFromtScreen() {
     }
     
 }
+// calls the automatic cleaning of the allEnemies array every  seconds
+window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,1000);
 
-window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,5000);
 
+// function reseting the game to its initial state, and displaying a message
+function reset() {
+    // display message for a little while (1 second)
+    
+    // reset game to initial state
+}
 
 // Place the player object in a variable called player
 const player = new Player();

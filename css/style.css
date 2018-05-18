@@ -1,3 +1,22 @@
 body {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    background: url(../images/paper_fibers.png);
+}
+
+#message-box {
+    position:absolute;
+    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Skranji', cursive;
+    font-size: 2.2em;
+    background: url(../images/ricepaper_v3.png), rgba(255, 255, 255, 0.9);
+    padding: 0.5em 1em;
+    border-radius: 0.2em;
+    box-shadow: 0 0 5px 5px rgba(70, 70, 70, 0.41);
+    display: none;
 }
