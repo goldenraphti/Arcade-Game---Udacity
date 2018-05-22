@@ -61,6 +61,7 @@ class Enemy extends Character {
         // Handles collision with the Player
         function checkCollision(enemyXPosition , enemyCaseRow) {
             if ( Math.abs(player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
+                
                 // stops movements of the game
                 Enemy.prototype.update = function () {
                     this.x = this.x;
@@ -248,11 +249,8 @@ function reset() {
     playerActive = true;
     
     //restart the automatic creation of enemies
+    enemyAutomaticCreation()
     
-    // re-enable the enemies to move
-    Enemy.prototype.update = function () {
-        this.x += this.speed * dt ;
-    }
     
     // hide any eventual message displayed above the game
     document.getElementById('message-box').setAttribute('style','display : none');
