@@ -13,6 +13,7 @@ class Character {
 gameLevel = 'beginner';
 
 
+
 // Enemies our player must avoid
 class Enemy extends Character {
     constructor( randomHeight = 2 , randomSpeed = 30, width, height) {
@@ -59,7 +60,7 @@ class Enemy extends Character {
         
         // Handles collision with the Player
         function checkCollision(enemyXPosition , enemyCaseRow) {
-            if ( (player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
+            if ( Math.abs(player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
                 // stops movements of the game
                 Enemy.prototype.update = function () {
                     this.x = this.x;
