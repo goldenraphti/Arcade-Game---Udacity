@@ -12,8 +12,6 @@ class Character {
 // for now, decide that level of the game is "beginner", but can later implement possibility to decide level, or to increase the level progressively when player keeps winning
 gameLevel = 'beginner';
 
-
-
 // Enemies our player must avoid
 class Enemy extends Character {
     constructor( randomHeight = 2 , randomSpeed = 30, width, height) {
@@ -53,10 +51,8 @@ class Enemy extends Character {
     // which will ensure the game runs at the same speed for
     // all computers.
         
-        
         // Updates the Enemy location
         this.x += this.speed * dt ;
-        
         
         // Handles collision with the Player
         function checkCollision(enemyXPosition , enemyCaseRow) {
@@ -96,11 +92,7 @@ class Enemy extends Character {
         }
         checkCollision(this.x , this.caseRow);
 
-        
     }
-    
-    
-    
     
     // Draw the enemy on the screen, required method for game
     render() {
@@ -228,8 +220,6 @@ function enemyAutomaticCreation () {
             } else if ( gameLevel === 'expert') {
                 randomTimeSetout = getRandomTimeArbitrary(300, 1500)  ;
             }
-
-
         
         timeoutID = window.setInterval(addEnemies, randomTimeSetout);
 
@@ -252,17 +242,12 @@ function automaticDeletionOfEnemiesOutFromtScreen() {
     }
     
 }
+
 // calls the automatic cleaning of the allEnemies array every  seconds
 window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,100);
 
-
-
-
 // Place the player object in a variable called player
 const player = new Player();
-
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
