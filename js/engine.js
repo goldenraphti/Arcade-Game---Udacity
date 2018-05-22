@@ -62,7 +62,7 @@ var Engine = (function(global) {
     function delayedStart() {
         
         // from very beggining
-        playerActive = true;
+        playerActive = false;
         // display message 'ready ?'
         document.getElementById('start-message-box-first').setAttribute('style','display : block');
         
@@ -70,9 +70,9 @@ var Engine = (function(global) {
         window.setTimeout(function(){
             // hide any eventual message displayed above the game
             document.getElementById('start-message-box-first').setAttribute('style','display : none');
-            // display message 'Go'
+                // display message 'Go'
             document.getElementById('start-message-box-second').setAttribute('style','display : block');
-        }, 2000);
+            }, 2000);
         
         // at second 2,5
         window.setTimeout(function(){
@@ -82,7 +82,7 @@ var Engine = (function(global) {
 
             // hide any eventual message displayed above the game
             document.getElementById('start-message-box-second').setAttribute('style','display : none');
-        }, 2000);
+        }, 2500);
     }
     
     /* This function does some initial setup that should only occur once,

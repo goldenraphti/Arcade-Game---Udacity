@@ -110,7 +110,7 @@ class Enemy extends Character {
 };
 
 // variable displaying if player should be able to play or not (true when game is on, false when died or has not started yet)
-let playerActive = true;
+let playerActive;
 
 // Now write your own player class
 // This class requires an update(), render() and
