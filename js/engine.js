@@ -58,6 +58,33 @@ var Engine = (function(global) {
         win.requestAnimationFrame(main);
     }
 
+    // this function delay the start by leaving a message displayed on screen and blocking the player from moving while creating ennemies and leting them "enter the game field"
+    function delayedStart() {
+        
+        // from very beggining
+        playerActive = true;
+        // display message 'ready ?'
+        document.getElementById('start-message-box-first').setAttribute('style','display : block');
+        
+        // at second 2
+        window.setTimeout(function(){
+            // hide any eventual message displayed above the game
+            document.getElementById('start-message-box-first').setAttribute('style','display : none');
+            // display message 'Go'
+            document.getElementById('start-message-box-second').setAttribute('style','display : block');
+        }, 2000);
+        
+        // at second 2,5
+        window.setTimeout(function(){
+
+            // let player able to move
+            playerActive = true;
+
+            // hide any eventual message displayed above the game
+            document.getElementById('start-message-box-second').setAttribute('style','display : none');
+        }, 2000);
+    }
+    
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
@@ -66,6 +93,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+        delayedStart();
     }
 
     /* This function is called by main (our game loop) and itself calls all

@@ -84,7 +84,7 @@ class Enemy extends Character {
                     playerActive = true;
 
                     // hide any eventual message displayed above the game
-                    document.querySelector('.hidden-message-box').setAttribute('style','display : none');
+                    document.getElementById('fail-message-box').setAttribute('style','display : none');
 
                 }
 
