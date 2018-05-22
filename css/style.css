@@ -7,7 +7,7 @@ body {
     background: url(../images/paper_fibers.png);
 }
 
-#message-box {
+.hidden-message-box {
     position:absolute;
     z-index: 1;
     margin-left: auto;

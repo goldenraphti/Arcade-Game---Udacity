@@ -62,25 +62,34 @@ class Enemy extends Character {
         function checkCollision(enemyXPosition , enemyCaseRow) {
             if ( Math.abs(player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
                 
-                // stops movements of the game
-                Enemy.prototype.update = function () {
-                    this.x = this.x;
-                }
-                
-                // stops creating new Enemies
-                window.clearInterval(timeoutID);
-                
                 // stops the player from moving
                 playerActive = false;
                 
                 // display message 'you died'
-                document.getElementById('message-box').setAttribute('style','display : block');
+                document.getElementById('fail-message-box').setAttribute('style','display : block');
+                
+                // sets the initial location of the player, bottom center
+                player.caseRow = 5;
+                player.y = ( player.caseRow * player.height ) - ( player.height / 2 );
+                player.caseCol = 2;
+                player.x = ( (player.caseCol * 2 - 1 ) * player.width ) + ( player.width);
                 
                 // resets the game to its initial state
                 let timeoutReset;
+                
+                // function reseting the game to its initial state, and displaying a message
+                function intermediateReset() {
+                    
+                    // allow the player to move again
+                    playerActive = true;
+
+                    // hide any eventual message displayed above the game
+                    document.querySelector('.hidden-message-box').setAttribute('style','display : none');
+
+                }
 
                 function delayedReset() {
-                  timeoutID = window.setTimeout(reset, 2000);
+                  timeoutID = window.setTimeout(intermediateReset, 2000);
                 }
                 delayedReset();
             }
@@ -157,6 +166,17 @@ class Player extends Character {
             this.y = ( this.caseRow * this.height ) - ( this.height / 2 );
             this.x = ( (this.caseCol * 2 - 1 ) * this.width ) + ( this.width);
         }
+    }
+    
+    checkVictory() {
+            if ( this.caseRow === 0  ) {
+                
+                // display message 'you died'
+                document.getElementById('victory-message-box').setAttribute('style','display : block');
+                
+                // stops player from moving
+                playerActive = false;
+            }
     }
 };
 
@@ -236,29 +256,11 @@ function automaticDeletionOfEnemiesOutFromtScreen() {
 window.setInterval(automaticDeletionOfEnemiesOutFromtScreen,100);
 
 
-// function reseting the game to its initial state, and displaying a message
-function reset() {
-    // reset game to initial state
-    allEnemies.length = 0;
-    
-    // sets the initial location of the player, bottom center
-    player.caseRow = 5;
-    player.y = ( player.caseRow * player.height ) - ( player.height / 2 );
-    player.caseCol = 2;
-    player.x = ( (player.caseCol * 2 - 1 ) * player.width ) + ( player.width);
-    playerActive = true;
-    
-    //restart the automatic creation of enemies
-    enemyAutomaticCreation()
-    
-    
-    // hide any eventual message displayed above the game
-    document.getElementById('message-box').setAttribute('style','display : none');
-    
-}
+
 
 // Place the player object in a variable called player
 const player = new Player();
+
 
 
 
