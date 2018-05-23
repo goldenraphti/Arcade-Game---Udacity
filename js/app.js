@@ -1,3 +1,6 @@
+// Whole-script strict mode syntax
+'use strict';
+
 // class character, which we will use to create subclasses Enemy and Player
 class Character {
     
@@ -10,7 +13,7 @@ class Character {
 }
 
 // for now, decide that level of the game is "beginner", but can later implement possibility to decide level, or to increase the level progressively when player keeps winning
-gameLevel = 'beginner';
+let gameLevel = 'beginner';
 
 // Enemies our player must avoid
 class Enemy extends Character {
@@ -194,7 +197,7 @@ const allEnemies = [];
  }
 
 function addEnemies() {
-    enemyToAdd = createEnemy()
+    const enemyToAdd = createEnemy()
     allEnemies.push(enemyToAdd);
 }
 
