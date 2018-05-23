@@ -108,10 +108,6 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         
-        player.checkVictory();
-        
-        
-        
         for ( enemy of allEnemies ) {
             enemy.checkCollision();
         };
