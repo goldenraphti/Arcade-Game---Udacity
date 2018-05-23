@@ -22,8 +22,8 @@ Once (s)he reaches the river at the top of the screen a victory message is displ
 
 There is two ways to play the game.
 Either:
-+ Play it online from here: <,https://goldenraphti.github.io/Arcade-Game-Udacity/>
-+ Or download the repository (<,https://github.com/goldenraphti/Arcade-Game-Udacity>) and load index.html in your favorite browser
++ Play it online from here: https://goldenraphti.github.io/Arcade-Game-Udacity/
++ Or download the repository (https://github.com/goldenraphti/Arcade-Game-Udacity) and load index.html in your favorite browser
 
 ## Technical Instructions for Developers
 
