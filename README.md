@@ -4,6 +4,7 @@ frontend-nanodegree-arcade-game
 ## Table of Contents
 
 * [Instructions for the players](#instructions-for-the-players)
+* [Loading the game](#loading-the-game)
 * [Technical Instructions for Developers](#technical-instructions-for-developers)
 * [Credits](#credits)
 
@@ -16,6 +17,13 @@ There is enemies (bugs) are crossing the board from left to right at different s
 To move the player must use the arrow buttons of her/his keyboard.
 Everytime the player is touched by a bug (s)he re-start from the start case at the bottom of the board.
 Once (s)he reaches the river at the top of the screen a victory message is displayed.
+
+## Loading the game
+
+There is two ways to play the game.
+Either:
++ Play it online from here: <,https://goldenraphti.github.io/Arcade-Game-Udacity/>
++ Or download the repository (<,https://github.com/goldenraphti/Arcade-Game-Udacity>) and load index.html in your favorite browser
 
 ## Technical Instructions for Developers
 

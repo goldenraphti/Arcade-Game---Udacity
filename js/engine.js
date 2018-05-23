@@ -62,7 +62,7 @@ var Engine = (function(global) {
     function delayedStart() {
         
         // from very beggining
-        playerActive = false;
+        player.playerActive = false;
         // display message 'ready ?'
         document.getElementById('start-message-box-first').setAttribute('style','display : block');
         
@@ -78,7 +78,7 @@ var Engine = (function(global) {
         window.setTimeout(function(){
 
             // let player able to move
-            playerActive = true;
+            player.playerActive = true;
 
             // hide any eventual message displayed above the game
             document.getElementById('start-message-box-second').setAttribute('style','display : none');
@@ -107,9 +107,14 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
         
         player.checkVictory();
+        
+        
+        
+        for ( enemy of allEnemies ) {
+            enemy.checkCollision();
+        };
     }
 
     /* This is called by the update function and loops through all of the

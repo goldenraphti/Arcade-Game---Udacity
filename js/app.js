@@ -10,6 +10,14 @@ class Character {
         this.width = 101 / 2;
     }
     
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    
+    update(dt) {
+        
+    }
+    
 }
 
 // for now, decide that level of the game is "beginner", but can later implement possibility to decide level, or to increase the level progressively when player keeps winning
@@ -19,8 +27,6 @@ let gameLevel = 'beginner';
 class Enemy extends Character {
     constructor( randomHeight = 2 , randomSpeed = 30, width, height) {
         super(width, height);
-        // The image/sprite for our enemies, this uses
-        // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
         
         // sets the initial location of the enemy
@@ -56,13 +62,14 @@ class Enemy extends Character {
         
         // Updates the Enemy location
         this.x += this.speed * dt ;
-        
-        // Handles collision with the Player
-        function checkCollision(enemyXPosition , enemyCaseRow) {
-            if ( Math.abs(player.x - enemyXPosition) < 101  && player.caseRow === enemyCaseRow  ) {
+    }
+    
+    // Handles collision with the Player
+     checkCollision() {
+            if ( Math.abs(player.x - this.x) < 101  && player.caseRow === this.caseRow  ) {
                 
                 // stops the player from moving
-                playerActive = false;
+                player.playerActive = false;
                 
                 // display message 'you died'
                 document.getElementById('fail-message-box').setAttribute('style','display : block');
@@ -76,36 +83,11 @@ class Enemy extends Character {
                 // resets the game to its initial state
                 let timeoutReset;
                 
-                // function reseting the game to its initial state, and displaying a message
-                function intermediateReset() {
-                    
-                    // allow the player to move again
-                    playerActive = true;
-
-                    // hide any eventual message displayed above the game
-                    document.getElementById('fail-message-box').setAttribute('style','display : none');
-
-                }
-
-                function delayedReset() {
-                  timeoutID = window.setTimeout(intermediateReset, 2000);
-                }
-                delayedReset();
+                player.delayedReset();
             }
         }
-        checkCollision(this.x , this.caseRow);
 
-    }
-    
-    // Draw the enemy on the screen, required method for game
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        
-    }
 };
-
-// variable displaying if player should be able to play or not (true when game is on, false when died or has not started yet)
-let playerActive = true;
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -117,17 +99,10 @@ class Player extends Character {
         super(width, height)
         
         // this provides the adequate image. If none has been selected beforehand using the charHero variable
-        if (charHero === 'boy') {
-            this.sprite = 'images/char-boy.png';
-        } else if  (charHero === 'princess') {
-            this.sprite = 'images/char-princess-girl.png';
-        } else if (charHero === 'pink-girl') {
-            this.sprite = 'images/char-pink-girl.png';
-        } else if  (charHero === 'cat-girl') {
-            this.sprite = 'images/char-cat-girl.png';
-        } else if  (charHero === 'horn-girl') {
-            this.sprite = 'images/char-horn-girl.png';
-        }
+        this.sprite = `images/char-${charHero}.png`;
+        
+        // variable displaying if player should be able to play or not (true when game is on, false when died or has not started yet)
+        this.playerActive = true;
         
         // sets the initial location of the player, bottom center
         this.caseRow = 5;
@@ -137,17 +112,9 @@ class Player extends Character {
         
     }
     
-    update(dt) {
-        
-    }
-    
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    }
-    
     handleInput(move) {
         
-        if (playerActive) {
+        if (this.playerActive) {
             if (move === 'left' && this.caseCol !== 0) {
                 this.caseCol--;
             } else if (move === 'right' && this.caseCol !== 4) {
@@ -163,6 +130,21 @@ class Player extends Character {
         }
     }
     
+    // function reseting the game to its initial state, and displaying a message
+    intermediateReset() {
+
+        // allow the player to move again
+        player.playerActive = true;
+
+        // hide any eventual message displayed above the game
+        document.getElementById('fail-message-box').setAttribute('style','display : none');
+
+    }
+    
+    delayedReset() {
+      timeoutID = window.setTimeout(player.intermediateReset, 2000);
+    }
+    
     checkVictory() {
             if ( this.caseRow === 0  ) {
                 
@@ -170,7 +152,7 @@ class Player extends Character {
                 document.getElementById('victory-message-box').setAttribute('style','display : block');
                 
                 // stops player from moving
-                playerActive = false;
+                this.playerActive = false;
             }
     }
 };
@@ -191,8 +173,7 @@ const allEnemies = [];
      
      let randomeHeight = getRandomInt(3) + 1 ;
      
-     let enemy =  Symbol('enemy');
-     enemy = new Enemy(randomeHeight , randomSpeed);
+     let enemy = new Enemy(randomeHeight , randomSpeed);
      return enemy
  }
 
@@ -206,8 +187,6 @@ let timeoutID;
 
 // function creating enemies automatically
 function enemyAutomaticCreation () {
-
-    function enemyCreation() {
         
     
         function getRandomTimeArbitrary(min, max) {
@@ -225,10 +204,6 @@ function enemyAutomaticCreation () {
             }
         
         timeoutID = window.setInterval(addEnemies, randomTimeSetout);
-
-    }
-    
-   enemyCreation();
 }
 // call the function right away
 enemyAutomaticCreation ()
